@@ -79,26 +79,40 @@ th {
 <h1>🌐 Actividad Clase 4</h1>
 <h2>Comunicación entre Servicios + REST + Eventos + Service Discovery</h2>
 
-<p><strong>Equipo:</strong> ____________________</p>
-<p><strong>Proyecto:</strong> ____________________</p>
+<p><strong>Equipo:</strong>Eduardo brayan sofia victor</p>
+<p><strong>Proyecto:</strong>Gestion de turnos bancos</p>
 
 <div class="section">
 <h2>🪜 1. Interacciones entre Servicios</h2>
 
 <p><strong>Interacción 1</strong></p>
-<label>Servicio que envía:</label>
+<label>Servicio que envía: Registro de turnos</label>
 <div class="line"></div>
-<label>Servicio que recibe:</label>
+<label>Servicio que recibe: Atención del turno</label>
 <div class="line"></div>
-<label>Información enviada:</label>
+<label>Información enviada: Número de turno, tipo de servicio y hora de creación</label>
 <div class="line"></div>
-<label>¿Qué sucede si no responde?</label>
+<label>¿Qué sucede si no responde? El empleado no sabrá qué turno atender y se generará retraso o desorden en la atención</label>
 <div class="line"></div>
 
 <p><strong>Interacción 2</strong></p>
+<label>Servicio que envía: Atención del turno</label>
+<div class="line"></div>
+<label>Servicio que recibe: Cierre del turno</label>
+<div class="line"></div>
+<label>Información enviada: Confirmación de que el turno fue atendido y datos del cliente</label>
+<div class="line"></div>
+<label>¿Qué sucede si no responde?  El turno no se marcará como finalizado y quedará pendiente, generando confusión en el sistema</label>
 <div class="line"></div>
 
 <p><strong>Interacción 3</strong></p>
+<label>Servicio que envía: Registro o Atención</label>
+<div class="line"></div>
+<label>Servicio que recibe: Pantalla de visualización y el Administrador</label>
+<div class="line"></div>
+<label>Información enviada: Turnos en espera, turnos en atención y alertas importantes</label>
+<div class="line"></div>
+<label>¿Qué sucede si no responde?  Los turnos no se mostrarán correctamente en la pantalla y el administrador no sabrá si hay errores.</label>
 <div class="line"></div>
 </div>
 
@@ -115,20 +129,20 @@ th {
 <tr>
 <td>1</td>
 <td></td>
-<td></td>
-<td></td>
+<td>X</td>
+<td>El registro envía los turnos al módulo de atención de manera asíncrona para que el flujo siga sin bloquear el sistema.</td>
 </tr>
 <tr>
 <td>2</td>
 <td></td>
-<td></td>
-<td></td>
+<td>X</td>
+<td>La atención confirma al cierre de manera asíncrona, porque no necesita que la atención espere a que se procese el cierre.</td>
 </tr>
 <tr>
 <td>3</td>
 <td></td>
-<td></td>
-<td></td>
+<td>X</td>
+<td>Las notificaciones a la pantalla y al administrador son asíncronas para que el sistema siga funcionando sin esperar confirmación.</td>
 </tr>
 </table>
 </div>
@@ -146,58 +160,63 @@ th {
 <tr>
 <td>1</td>
 <td></td>
-<td></td>
-<td></td>
+<td>X</td>
+<td>El turno se envía sin detener el flujo del sistema.</td>
 </tr>
 <tr>
 <td>2</td>
 <td></td>
-<td></td>
-<td></td>
+<td>X</td>
+<td>La confirmación de cierre no bloquea la atención.</td>
 </tr>
 <tr>
 <td>3</td>
 <td></td>
-<td></td>
-<td></td>
+<td>X</td>
+<td>Las notificaciones no requieren respuesta inmediata.</td>
 </tr>
 </table>
 </div>
 
 <div class="section">
 <h2>🪜 4. Eventos Importantes del Sistema</h2>
-1️⃣ ______________________________________<br><br>
-2️⃣ ______________________________________<br><br>
-3️⃣ ______________________________________
-</div>
+1️⃣ Turno generado:  Cuando el cliente solicita un turno y el sistema crea el número automáticamente.<br><br>
+2️⃣ Turno llamado: Cuando el empleado llama el turno para iniciar la atención.<br><br>
+3️⃣ Turno cerrado: Cuando finaliza la atención y el sistema marca el turno como completado.</div>
 
 <div class="section">
 <h2>🪜 5. Análisis de Fallos</h2>
-<label>Servicio más crítico:</label>
+<label>Servicio más crítico:  La base de datos, porque ahí se guardan todos los turnos.</label>
 <div class="line"></div>
-<label>¿Qué pasaría si falla?</label>
+<label>¿Qué pasaría si falla?:  Si falla, no se podrían guardar nuevos turnos ni actualizar los que ya están en atención</label>
 <div class="line"></div>
-<label>¿El sistema debe detenerse o continuar?</label>
+<label>¿El sistema debe detenerse o continuar?:  Al trabajar con microservicios, el sistema no tendría que detenerse completamente. Si un servicio falla, los demás pueden seguir funcionando de manera independiente.</label>
 <div class="line"></div>
-<label>¿Cómo podrían manejar este fallo?</label>
+<label>¿Cómo podrían manejar este fallo?:  Haciendo copias de seguridad y teniendo un respaldo para que no se pierda la información.</label>
 <div class="line"></div>
 </div>
 
 <div class="section">
 <h2>🪜 6. Service Discovery</h2>
-<label>¿Qué problema ocurre si cambia la IP de un servicio?</label>
+<label>¿Qué problema ocurre si cambia la IP de un servicio?:  Los servicios no podrían encontrarse y la comunicación fallaría.</label>
 <div class="line"></div>
-<label>¿Cómo sabría un servicio dónde encontrar otro?</label>
+<label>¿Cómo sabría un servicio dónde encontrar otro?:  Cada servicio se registra en un directorio central; los demás lo consultan para saber su ubicación actual.</label>
 <div class="line"></div>
-<label>¿Por qué sería útil Service Discovery?</label>
+<label>¿Por qué sería útil Service Discovery?:  Service Discovery ayuda a que los servicios siempre se encuentren y se comuniquen, haciendo el sistema más flexible y confiable.</label>
 <div class="line"></div>
-<label>¿Dónde lo aplicarían en su sistema?</label>
+<label>¿Dónde lo aplicarían en su sistema?: Service Discovery se usaría para que todos los módulos (generación, atención, cierre y visualización de turnos) se encuentren y comuniquen automáticamente sin depender de IP fija</label>
 <div class="line"></div>
 </div>
 
 <div class="section">
 <h2>🪜 7. Mini Diagrama</h2>
-<p>Dibujen:</p>
+<p>Dibujen:  Módulo Generación de Turnos ──► Service Discovery ──► Módulo de Atención
+                                        │
+                                        ▼
+                                Módulo Cierre de Turno
+                                        │
+                                        ▼
+                             Pantalla de Visualización</p>
 <p><strong>Servicio A → Service Discovery → Servicio B</strong></p>
 </div>
 
